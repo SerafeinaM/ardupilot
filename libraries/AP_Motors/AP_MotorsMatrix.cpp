@@ -178,6 +178,19 @@ void AP_MotorsMatrix::output_to_motors()
     for (i = 0; i < AP_MOTORS_MAX_NUM_MOTORS; i++) {
         if (motor_enabled[i]) {
             rc_write(i, output_to_pwm(_actuator[i]));
+            // if(i!=2){
+            //     rc_write(i, output_to_pwm(_actuator[i]));
+            // }
+            // else{
+            //     rc_write(i, 1000.0f);
+            // }
+            // if(i == AP_MOTORS_MOT_1){
+            //     rc_write(i, output_to_pwm(_actuator[i]));
+            // }
+            // else{
+            //     rc_write(i, output_to_pwm(0)); 
+            // }
+            
         }
     }
 }
@@ -468,6 +481,13 @@ void AP_MotorsMatrix::_output_test_seq(uint8_t motor_seq, int16_t pwm)
     for (uint8_t i = 0; i < AP_MOTORS_MAX_NUM_MOTORS; i++) {
         if (motor_enabled[i] && _test_order[i] == motor_seq) {
             // turn on this motor
+            // if(i==2){
+            //     rc_write(i, 1200);
+            // }
+            // else{
+            //     rc_write(i, 1000);
+            // }
+            
             rc_write(i, pwm);
         }
     }

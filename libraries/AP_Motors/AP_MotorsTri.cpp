@@ -289,6 +289,7 @@ void AP_MotorsTri::_output_test_seq(uint8_t motor_seq, int16_t pwm)
     switch (motor_seq) {
         case 1:
             // front right motor
+            // rc_write(AP_MOTORS_MOT_1, pwm);
             rc_write(AP_MOTORS_MOT_1, pwm);
             break;
         case 2:

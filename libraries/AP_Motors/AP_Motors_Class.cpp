@@ -163,7 +163,7 @@ void AP_Motors::rc_set_freq(uint32_t motor_mask, uint16_t freq_hz)
         break;
     case PWM_TYPE_PWM_RANGE:
         /*
-          this is a motor output type for multirotors which honours
+          this is a motor output type for multirotors which honours 
           the SERVOn_MIN/MAX values per channel
          */
         _motor_pwm_range_mask |= motor_mask;
@@ -279,7 +279,7 @@ void AP_Motors::set_frame_string(const char * str) {
 void AP_Motors::output_test_seq(uint8_t motor_seq, int16_t pwm)
 {
     if (armed() && _interlock) {
-        _output_test_seq(motor_seq, pwm);
+        _output_test_seq(motor_seq, pwm); 
     }
 }
 

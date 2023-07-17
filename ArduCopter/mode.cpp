@@ -175,6 +175,13 @@ Mode *Copter::mode_from_mode_num(const Mode::Number mode)
             break;
 #endif
 
+
+#if MODE_DIVE_ENABLED == ENABLED
+        case Mode::Number::DIVE:
+            ret = &mode_dive;
+            break;
+#endif
+
         default:
             break;
     }

@@ -227,6 +227,10 @@ public:
     friend class ModeAutorotate;
     friend class ModeTurtle;
 
+    //
+    friend class ModeDive;
+    //
+
     Copter(void);
 
 private:
@@ -1028,6 +1032,9 @@ private:
 #endif
 #if MODE_TURTLE_ENABLED == ENABLED
     ModeTurtle mode_turtle;
+#endif
+#if MODE_DIVE_ENABLED == ENABLED
+    ModeDive mode_dive;
 #endif
 
     // mode.cpp
