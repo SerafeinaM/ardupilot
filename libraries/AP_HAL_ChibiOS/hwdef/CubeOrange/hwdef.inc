@@ -30,6 +30,9 @@ I2C_ORDER I2C2 I2C1
 # order of UARTs (and USB)
 SERIAL_ORDER OTG1 USART2 USART3 UART4 UART8 UART7 OTG2
 
+# default the 2nd interface to SLCAN
+define HAL_OTG2_PROTOCOL SerialProtocol_SLCAN
+
 # If the board has an IOMCU connected via a UART then this defines the
 # UART to talk to that MCU. Leave it out for boards with no IOMCU.
 
@@ -283,10 +286,6 @@ define HAL_PROBE_EXTERNAL_I2C_COMPASSES
 define HAL_CHIBIOS_ARCH_FMUV3 1
 
 define BOARD_TYPE_DEFAULT 3
-
-# Nnow some defines for logging and terrain data files.
-define HAL_BOARD_LOG_DIRECTORY "/APM/LOGS"
-define HAL_BOARD_TERRAIN_DIRECTORY "/APM/TERRAIN"
 
 # allow to have have a dedicated safety switch pin
 define HAL_HAVE_SAFETY_SWITCH 1

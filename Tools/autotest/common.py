@@ -4518,9 +4518,12 @@ class AutoTest(ABC):
     def load_sample_mission(self):
         self.load_mission(self.sample_mission_filename())
 
+    def generic_mission_filepath_for_filename(self, filename):
+        return os.path.join(testdir, "Generic_Missions", filename)
+
     def load_generic_mission(self, filename, strict=True):
         return self.load_mission_from_filepath(
-            os.path.join(testdir, "Generic_Missions", filename),
+            self.generic_mission_filepath_for_filename(filename),
             strict=strict)
 
     def load_mission(self, filename, strict=True):
@@ -8089,7 +8092,7 @@ Also, ignores heartbeats not from our target system'''
         if self.mav is not None:
             self.mav.reconnect()
 
-    def get_suplementary_programs(self):
+    def get_supplementary_programs(self):
         return self.sup_prog
 
     def stop_sup_program(self, instance=None):
@@ -12993,23 +12996,25 @@ switch value'''
         # if gps_type is None we auto-detect
         sim_gps = [
             # (0, "NONE"),
-            (1, "UBLOX", None, "u-blox"),
-            (5, "NMEA", 5, "NMEA"),
-            (6, "SBP", None, "SBP"),
-            # (7, "SBP2", 9, "SBP2"),  # broken, "waiting for config data"
-            (8, "NOVA", 15, "NOVA"),  # no attempt to auto-detect this in AP_GPS
+            (1, "UBLOX", None, "u-blox", 5, 'detected'),
+            (5, "NMEA", 5, "NMEA", 5, 'detected'),
+            (6, "SBP", None, "SBP", 5, 'detected'),
+            # (7, "SBP2", 9, "SBP2", 5),  # broken, "waiting for config data"
+            (8, "NOVA", 15, "NOVA", 5, 'detected'),  # no attempt to auto-detect this in AP_GPS
+            (19, "MSP", 19, "MSP", 32, 'specified'),  # no attempt to auto-detect this in AP_GPS
             # (9, "FILE"),
         ]
         self.context_collect("STATUSTEXT")
-        for (sim_gps_type, name, gps_type, detect_name) in sim_gps:
+        for (sim_gps_type, name, gps_type, detect_name, serial_protocol, detect_prefix) in sim_gps:
             self.start_subtest("Checking GPS type %s" % name)
             self.set_parameter("SIM_GPS_TYPE", sim_gps_type)
+            self.set_parameter("SERIAL3_PROTOCOL", serial_protocol)
             if gps_type is None:
                 gps_type = 1  # auto-detect
             self.set_parameter("GPS_TYPE", gps_type)
             self.context_clear_collection('STATUSTEXT')
             self.reboot_sitl()
-            self.wait_statustext("detected as %s" % detect_name, check_context=True)
+            self.wait_statustext("%s as %s" % (detect_prefix, detect_name), check_context=True)
             n = self.poll_home_position(timeout=120)
             distance = self.get_distance_int(orig, n)
             if distance > 1:

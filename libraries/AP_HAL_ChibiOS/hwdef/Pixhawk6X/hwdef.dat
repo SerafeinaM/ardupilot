@@ -31,9 +31,6 @@ env OPTIMIZE -O2
 # order of UARTs (and USB)
 SERIAL_ORDER OTG1 UART7 UART5 USART1 UART8 USART2 UART4 USART3 OTG2
 
-# default the 2nd interface to MAVLink2
-define HAL_OTG2_PROTOCOL SerialProtocol_MAVLink2
-
 # default to all pins low to avoid ESD issues
 DEFAULTGPIO OUTPUT LOW PULLDOWN
 
@@ -353,9 +350,6 @@ DMA_PRIORITY SDMMC* USART6* ADC* UART* USART* SPI* TIM*
 
 # enable FAT filesystem support (needs a microSD defined via SDMMC)
 define HAL_OS_FATFS_IO 1
-
-define HAL_BOARD_LOG_DIRECTORY "/APM/LOGS"
-define HAL_BOARD_TERRAIN_DIRECTORY "/APM/TERRAIN"
 
 ROMFS io_firmware.bin Tools/IO_Firmware/iofirmware_lowpolh.bin
 
